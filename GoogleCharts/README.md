@@ -51,6 +51,8 @@ First represent this data using a ColumnChart. In this case since we have severa
 
 Now represent the same information using a Line chart. If you are interested in the evolution of the number of student in each course, which chart seems more adequate, a column or a line chart? On the other side which chart would you use to compare the number of student between courses? More [here](https://developers.google.com/chart/interactive/docs/gallery/linechart).
 
+R: Due to the large number of values and the variety of courses, the line chart is easier to see due to not being as clutered as the column chart. The column chart is better to compare the number of students between courses.
+
 ## 1.5 Combo charts
 Modify the previous example to present a combo chart like the following figure. Notice that in this visualization we also present the total of candidates in each year. 
 More [here](https://developers.google.com/chart/interactive/docs/gallery/combochart)
