@@ -5,10 +5,24 @@
     <title>Cartography - Lesson 4</title>
     <script src="https://d3js.org/d3.v6.js"></script>
     <style>
+        path {
+            fill:rgb(190,100,70);
+            stroke:black;
+            stroke-width: 1px;
+        }
+        circle {
+            fill:black;
+            stroke:black;
+            stroke-width: 1px;
+            opacity: 50%;
+        }
     </style>
     
+ 
     <script type="text/javascript">  
         function draw(geo_data) {
+            console.log(geo_data);
+            // Vis Code
             let margin = 75,
                 width = 1400 - margin,
                 height = 600 - margin;
@@ -16,8 +30,77 @@
             let svg = d3.select("body").append("svg")
                 .attr("width", width + margin)
                 .attr("height", height + margin)
-                .append('g')
-                    .attr('class', 'map');
+                //.append('g')
+                //    .attr('class', 'map');
+
+
+            let projection = d3.geoMercator();
+
+            let path = d3.geoPath().projection(projection);
+            //svg.append("path")
+            //    .attr("d", path(geo_data));
+            
+            svg.append("g")
+                .attr('class', 'map')
+                .append("path")
+                .attr("d", path(geo_data));
+
+
+            function plot_circles(data) {
+                let grouping=d3.rollup(data, 
+                function(group){
+                    
+                    let total=d3.sum(group,g=>g["attendance"]);
+                    let coords=group.map(d=>[d["long"],d["lat"]]);
+                    let centerx=d3.mean(coords,d=>d[0]);
+                    let centery=d3.mean(coords,d=>d[1]);
+                    
+                    return{"attendance":+total,
+                    "x":centerx,
+                    "y":centery
+                    }
+                }, 
+                function(d){
+                    return d["date"].getFullYear(); 
+                })
+               
+                let attendance_extent=d3.extent(grouping,d=>d[1].attendance);
+                let radius_scale=d3.scaleSqrt().domain(attendance_extent).range([1,15]);                
+
+               
+             
+
+                    svg.append("g")
+                        .attr("class", "attendance")
+                        .selectAll("circle")
+                        .data(grouping)
+                        .join("circle")
+                        .attr("cx", d => {
+                            let coords = projection([d[1].x, d[1].y]);
+                            return coords[0];
+                        }) // Use projection for x-coordinate
+                        .attr("cy", d => {
+                            let coords = projection([d[1].x, d[1].y]);
+                            return coords[1];
+                        }) // Use projection for y-coordinate
+                        .attr("r", d => radius_scale(d[1].attendance)); // Use radius scale for circle size
+                    
+
+            }
+
+            let parseTime = d3.timeParse("%d-%m-%Y (%H:%M h)");
+            	
+            d3.tsv("world_cup_geo.tsv")
+                .then((data) => {
+                    let newdata = data.map( d => {
+                        d["attendance"] = +d["attendance"];
+                        d["date"] = parseTime(d["date"]);
+                        return d;
+                    });
+                    plot_circles(newdata)
+                });
+
+
 
         };
     </script>
@@ -27,6 +110,7 @@
         d3.json("world_countries.json")
             .then(draw)
             .catch(err => { console.log(err) });
+       
     </script>
 </body>
 </html>
