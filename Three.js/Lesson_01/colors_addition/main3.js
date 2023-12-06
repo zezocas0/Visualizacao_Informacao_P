@@ -26,7 +26,8 @@ const vertices = new Float32Array( [
  
 ] );
 
-const vertices_last_triangle = new Float32Array([0.15, -0.95, 0.0,
+const vertices_last_triangle = new Float32Array([
+    0.15, -0.95, 0.0,
 	0.90, -0.7, 0.0,
 	0.65, 0.10, 0.0
 ]);
@@ -80,10 +81,5 @@ function animate() {
 }
 
 
-window.addEventListener('resize', function () {				       
-	renderer.setSize(window.innerWidth, window.innerHeight);
-	camera.aspect = window.innerWidth / window.innerHeight;
-	camera.updateProjectionMatrix();
-	});
 
 animate();
