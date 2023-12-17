@@ -21,7 +21,7 @@ shininess: 100
 });
 material1.flatShading = false;
 
-const material2 = new THREE.MeshPhongMaterial({
+const material2 = new THREE.MeshLambertMaterial({
     color: '#006063',
 
 });
