@@ -39,11 +39,43 @@ const material = new THREE.MeshPhongMaterial({
 const body = new THREE.Mesh( geometry, material );
 car.add( body );
 
+
+//*  4 wheels on the bottom lower vertices cylinder
+const wheelGeometry = new THREE.CylinderGeometry(0.5, 0.5, 0.2, 32);
+const wheelMaterial = new THREE.MeshPhongMaterial( {
+	color: 0xff0000,
+	specular:0xff0000,
+	shininess:100,
+	opacity:0.3,
+	transparent:true
+});
+const wheel1 = new THREE.Mesh( wheelGeometry, wheelMaterial );
+wheel1.rotateZ(Math.PI/2);
+wheel1.position.set(1, -0.5,2);
+// wheel1.rotation.y=0.2;
+car.add(wheel1);
+const wheel2 = new THREE.Mesh( wheelGeometry, wheelMaterial );
+wheel2.rotateZ(Math.PI/2);
+wheel2.position.set(-1, -0.5, 2);
+// wheel2.rotation.y=0.2;
+car.add( wheel2 );
+const wheel3 = new THREE.Mesh( wheelGeometry, wheelMaterial );
+wheel3.rotateZ(Math.PI/2);
+wheel3.position.set(1, -0.5, -2);
+car.add( wheel3 );
+const wheel4 = new THREE.Mesh( wheelGeometry, wheelMaterial );
+wheel4.rotateZ(Math.PI/2);
+wheel4.position.set(-1, -0.5, -2);
+car.add( wheel4 );
+
+
+
 //* add xyz axis to the center of the car
-const xyzg= new THREE.CylinderGeometry(0.05,0.05,0.5,32);
-const xmaterial= new THREE.MeshBasicMaterial({color: 0xff0000})
-const ymaterial= new THREE.MeshBasicMaterial({color: 0x00ff00})
-const zmaterial= new THREE.MeshBasicMaterial({color: 0x0000ff})
+const axis= new THREE.Object3D();
+const xyzg= new THREE.CylinderGeometry(0.03,0.03,0.5,32);
+const xmaterial= new THREE.MeshBasicMaterial({color: 0xff0000}) // red color
+const ymaterial= new THREE.MeshBasicMaterial({color: 0x00ff00})	// green color
+const zmaterial= new THREE.MeshBasicMaterial({color: 0x0000ff}) // blue color
 
 const zcoord= new THREE.Mesh(xyzg,zmaterial)
 zcoord.position.set(0,0,0.2)
@@ -58,37 +90,13 @@ const xcoord= new THREE.Mesh(xyzg,xmaterial)
 xcoord.position.set(0.2,0,0)
 xcoord.rotateZ(Math.PI/2)
 
-car.add(xcoord)
-car.add(ycoord)
-car.add(zcoord)
+axis.add(xcoord)
+axis.add(ycoord)
+axis.add(zcoord)
+//add axis to the car, so they move together
+car.add(axis)
 
-//*  4 wheels on the bottom lower vertices cylinder
-const wheelGeometry = new THREE.CylinderGeometry(0.5, 0.5, 0.25, 32);
-const wheelMaterial = new THREE.MeshPhongMaterial( {
-	color: 0xff0000,
-	specular:0xff0000,
-	shininess:100,
-	opacity:0.3,
-	transparent:true
-});
-const wheel1 = new THREE.Mesh( wheelGeometry, wheelMaterial );
-wheel1.rotateZ(Math.PI/2);
-wheel1.position.set(1, -0.5,2);
-wheel1.rotation.y=0.2;
-car.add(wheel1);
-const wheel2 = new THREE.Mesh( wheelGeometry, wheelMaterial );
-wheel2.rotateZ(Math.PI/2);
-wheel2.position.set(-1, -0.5, 2);
-wheel2.rotation.y=0.2;
-car.add( wheel2 );
-const wheel3 = new THREE.Mesh( wheelGeometry, wheelMaterial );
-wheel3.rotateZ(Math.PI/2);
-wheel3.position.set(1, -0.5, -2);
-car.add( wheel3 );
-const wheel4 = new THREE.Mesh( wheelGeometry, wheelMaterial );
-wheel4.rotateZ(Math.PI/2);
-wheel4.position.set(-1, -0.5, -2);
-car.add( wheel4 );
+
 
 // adding car to scene
 scene.add(car);
@@ -99,7 +107,7 @@ scene.add(car);
 
 
 
-const sGeometry= new THREE.SphereGeometry(0.25);
+const sGeometry= new THREE.SphereGeometry(0.1);
 const sMaterial= new THREE.MeshBasicMaterial({color: 0x00ff00});
 const sphere= new THREE.Mesh(sGeometry,sMaterial);
 
@@ -122,8 +130,7 @@ function animate() {
 
 	// Set the car's position based on its rotation around the sphere
 	const angle = Date.now() / 1000; //  speed of rotation baseado no divisor 
-	const radius = 2.5; // radius of rotation
-
+	const radius = 1; // radius of rotation
 	car.position.x = x + radius * Math.sin(angle);
 	car.position.y = y;
 	car.position.z = z + radius * Math.cos(angle);
@@ -132,13 +139,8 @@ function animate() {
 	const rotationAngle = angle + Math.PI / 2; // add pi/2 because if not, 
 	//the car would rotate around the car with the z axis poinging to the sphere, making it look like "drifting" around the sphere 
 	
-
     // Apply the rotation to the car
     car.rotation.set(0, rotationAngle, 0);
-
-	
-
-
 
 
 }

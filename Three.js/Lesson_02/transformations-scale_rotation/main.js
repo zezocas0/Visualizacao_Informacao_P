@@ -31,7 +31,7 @@ const body = new THREE.Mesh( geometry, material );
 car.add( body );
 
 // 4 wheels on the bottom lower vertices
-const wheelGeometry = new THREE.SphereGeometry(0.25);
+const wheelGeometry = new THREE.SphereGeometry(0.5);
 const wheelMaterial = new THREE.MeshBasicMaterial( {color: 0xff0000} );
 const wheel1 = new THREE.Mesh( wheelGeometry, wheelMaterial );
 wheel1.position.set(1, -0.5,2);
