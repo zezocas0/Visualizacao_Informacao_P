@@ -107,7 +107,7 @@ function animate() {
 
 	
 
-	const moonOrbitSpeed = rotationSpeed / (28 * 24); // Moon's orbit speed
+	const moonOrbitSpeed = rotationSpeed / (PERIOD * 24); // Moon's orbit speed
     const angle = Date.now() * moonOrbitSpeed; // angle in radians
 	
 	const radius = Math.sqrt(DISTANCE_FROM_EARTH/2); // radius of rotation
