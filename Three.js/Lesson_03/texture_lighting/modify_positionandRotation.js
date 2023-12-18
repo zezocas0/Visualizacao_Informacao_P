@@ -38,54 +38,61 @@ const directionalLight= new THREE.DirectionalLight(0xffffff, 0.5);
 directionalLight.position.set(2,0,0);
 scene.add(directionalLight);
 
-var rotationSpeed = 0.01;
+var rotationSpeed = 0.0025;
 var inclination = 0;
+
+
+document.addEventListener('keydown', onDocumentKeyDown, false); 
+
+
 
 function onDocumentKeyDown(event) {
 // to obtain the keycode 
 	var keyCode = event.which;
-	//Quero a tecla baseada no codigo
-	var tecla = String.fromCharCode(keyCode);
-	switch (tecla.toUpperCase()) {
-		case "L":
+	console.log(keyCode);
+	switch (keyCode) {
+		case 76: // L
 		  directionalLight.intensity = (directionalLight.intensity === 0) ? 0.5 : 0;
 		  break;
-		case "+":
+		case 171: // +
 		  if (directionalLight.intensity < 1) {
+			console.log(directionalLight.intensity)
 			directionalLight.intensity += 0.1;
 		  }
 		  break;
-		case "-":
+		case 173:	// -
 		  if (directionalLight.intensity >= 0) {
 			directionalLight.intensity -= 0.1;
 		  }
 		  break;
-		case "ArrowLeft":
-		  rotationSpeed -= 5.005;
-		  console.log(rotationSpeed);
-		  break;
-		case "ArrowRight":
-		  rotationSpeed += 10.005;
-		  break;
-		case "ArrowUp":
-		  inclination += 0.01;
-		  break;
-		case "ArrowDown":
-		  inclination -= 0.01;
-		  break;
-		default:
-		  break;
-	  }
+		case 37: // left arrow
+			// increase rotation 
+			rotationSpeed += 0.01;
+			console.log(rotationSpeed);
+			break; // Added break statement here
+		case 39: // right arrow
+			// decrease rotation
+			rotationSpeed -= 0.01;
+			console.log(rotationSpeed);
 
-	console.log(tecla);	
+			break; // Added break statement here
+	
+	default :
+		break;
+	
+	}
+		  
 }
+
+
+
 
 function animate() {
 	requestAnimationFrame( animate );
 	controls.update();
 
 	sphere.rotation.y+= rotationSpeed;
-	console.log(rotationSpeed);
+	// console.log(rotationSpeed);
 
 	renderer.render( scene, camera );
 }

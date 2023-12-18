@@ -43,25 +43,30 @@ document.addEventListener('keydown', onDocumentKeyDown, false);
 function onDocumentKeyDown(event) {
 // to obtain the keycode 
 	var keyCode = event.which;
-	//Quero a tecla baseada no codigo
-	var tecla = String.fromCharCode(keyCode);
-	tecla = tecla.toUpperCase();
-	switch (tecla.toUpperCase()) {
-		case "L":
+
+	// tecla = String.fromCharCode(keyCode);
+	// console.log(tecla);
+	
+
+	switch (keyCode) {
+		case 76: // L
 		  directionalLight.intensity = (directionalLight.intensity === 0) ? 0.5 : 0;
 		  break;
-		case "+":
+		case 171: // +
 		  if (directionalLight.intensity < 1) {
+			console.log(directionalLight.intensity)
 			directionalLight.intensity += 0.1;
 		  }
 		  break;
-		case "-":
+		case 173:	// -
 		  if (directionalLight.intensity >= 0) {
 			directionalLight.intensity -= 0.1;
 		  }
 		  break;
-		default:
-			break;
+
+	default :
+		  break;
+		  
 	}
 	
 }
