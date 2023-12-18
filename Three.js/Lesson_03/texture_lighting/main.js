@@ -11,17 +11,17 @@ document.body.appendChild( renderer.domElement );
 
 
 
-const geometry = new THREE.SphereGeometry( 1, 32, 32);
+const geometry = new THREE.BoxGeometry( 1, 1, 1 );
 
 
 const textureLoader = new THREE.TextureLoader();
-const texture = textureLoader.load("../earth_surface_2048.jpg"); 
+const texture = textureLoader.load("../lena.jpg"); 
 
 const planeMaterial = new THREE.MeshBasicMaterial({ map: texture });
-const sphere = new THREE.Mesh(geometry, planeMaterial);
+const cube = new THREE.Mesh(geometry, planeMaterial);
 
 
-scene.add(sphere);
+scene.add(cube);
 
 
 const controls = new OrbitControls( camera, renderer.domElement );
@@ -30,10 +30,8 @@ camera.position.z = 5;
 function animate() {
 	requestAnimationFrame( animate );
 
-	// sphere rotation on the z axis=0.41 radians
-	sphere.rotation.z += 0.01;
-	sphere.rotation.y += 0.00025;
-
+	// cube.rotation.x += 0.01;
+	// cube.rotation.y += 0.01;
 
 	controls.update();
 
