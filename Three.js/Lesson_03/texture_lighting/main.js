@@ -10,30 +10,48 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
 
-
-const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-
-
 const textureLoader = new THREE.TextureLoader();
-const texture = textureLoader.load("../lena.jpg"); 
-
-const planeMaterial = new THREE.MeshBasicMaterial({ map: texture });
-const cube = new THREE.Mesh(geometry, planeMaterial);
+const texture = textureLoader.load("../earth_surface_2048.jpg"); 
 
 
-scene.add(cube);
+const geometry = new THREE.SphereGeometry(1, 32, 32);
 
+const sphereMaterial = new THREE.MeshPhongMaterial({map: texture,
+	specular: 0xffffff, 
+    shininess: 30		 
+});
+const sphere = new THREE.Mesh(geometry, sphereMaterial);
+ 
+scene.add(sphere);
 
 const controls = new OrbitControls( camera, renderer.domElement );
 camera.position.z = 5;
 
+// sphere rotation on the z axis=0.41 radians to llok like 
+sphere.rotation.z=0.41
+
+//lighting
+const ambientLight= new THREE.AmbientLight(0x333333, 0.5);
+scene.add(ambientLight);
+
+const directionalLight= new THREE.DirectionalLight(0xffffff, 0.5);
+directionalLight.position.set(2,0,0);
+scene.add(directionalLight);
+
+document.addEventListener('keydown', onDocumentKeyDown, false); 
+
+function onDocumentKeyDown(event) {
+// to obtain the keycode 
+	var keyCode = event.which;
+	console.log("tecla presionada: "+keyCode);
+}
+
 function animate() {
 	requestAnimationFrame( animate );
-
-	// cube.rotation.x += 0.01;
-	// cube.rotation.y += 0.01;
-
 	controls.update();
+
+	sphere.rotation.y+=0.0025;
+
 
 	renderer.render( scene, camera );
 }
