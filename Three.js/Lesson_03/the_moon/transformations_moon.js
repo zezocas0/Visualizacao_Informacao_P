@@ -43,47 +43,6 @@ moon.rotation.y=Math.PI;
 
 
 
-
-document.addEventListener('keydown', onDocumentKeyDown, false); 
-function onDocumentKeyDown(event) {
-// to obtain the keycode 
-	var keyCode = event.which;
-	console.log(keyCode);
-	switch (keyCode) {
-		case 76: // L
-		  directionalLight.intensity = (directionalLight.intensity === 0) ? 0.5 : 0;
-		  break;
-		case 171: // +
-		  if (directionalLight.intensity < 1) {
-			console.log(directionalLight.intensity)
-			directionalLight.intensity += 0.1;
-		  }
-		  break;
-		case 173:	// -
-		  if (directionalLight.intensity >= 0) {
-			directionalLight.intensity -= 0.1;
-		  }
-		  break;
-		case 37: // left arrow
-			// increase rotation 
-			rotationSpeed += 0.01;
-			console.log(rotationSpeed);
-			break; // Added break statement here
-		case 39: // right arrow
-			// decrease rotation
-			rotationSpeed -= 0.01;
-			console.log(rotationSpeed);
-
-			break; // Added break statement here
-	
-	default :
-		break;
-	
-	}
-		  
-}
-
-
 // Lighting
 const ambientLight = new THREE.AmbientLight(0x606060, 0.5);
 scene.add(ambientLight);

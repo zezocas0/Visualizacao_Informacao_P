@@ -27,7 +27,7 @@ scene.add(sphere);
 const controls = new OrbitControls( camera, renderer.domElement );
 camera.position.z = 5;
 
-// sphere rotation on the z axis=0.41 radians to llok like 
+// sphere rotation on the z axis=0.41 radians to look like 
 sphere.rotation.z=0.41
 
 //lighting

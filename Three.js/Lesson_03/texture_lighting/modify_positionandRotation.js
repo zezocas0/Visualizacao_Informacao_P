@@ -69,13 +69,25 @@ function onDocumentKeyDown(event) {
 			// increase rotation 
 			rotationSpeed += 0.01;
 			console.log(rotationSpeed);
-			break; // Added break statement here
+			break; 
+
 		case 39: // right arrow
 			// decrease rotation
 			rotationSpeed -= 0.01;
 			console.log(rotationSpeed);
+			break; 
 
-			break; // Added break statement here
+		case 38: // up arrow
+		  	// increase inclination
+			inclination += 0.01;
+			console.log(inclination);
+			break;
+			 
+		case 40: // down arrow
+		  	// decrease inclination
+			inclination -= 0.01;
+			console.log(inclination);
+			break; 
 	
 	default :
 		break;

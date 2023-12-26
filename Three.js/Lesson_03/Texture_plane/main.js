@@ -18,7 +18,7 @@ scene.add( cube );
 const textureLoader = new THREE.TextureLoader();
 const texture = textureLoader.load("../lena.jpg"); 
 
-const planeGeometry = new THREE.PlaneGeometry(5, 5);
+const planeGeometry = new THREE.PlaneGeometry(3,3);
 const planeMaterial = new THREE.MeshBasicMaterial({ map: texture });
 const plane = new THREE.Mesh(planeGeometry, planeMaterial);
 
