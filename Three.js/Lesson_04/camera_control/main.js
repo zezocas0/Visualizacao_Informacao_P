@@ -124,7 +124,7 @@ function render() {
 	camera.position.y = raio * Math.sin(phi);
 	camera.position.z = raio * Math.cos(theta) * Math.cos(phi);
 	camera.updateMatrix();
-	camera.lookAt(scene.position);
+	camera.lookAt(0,0,0);
 
 	renderer.render(scene, camera);
 

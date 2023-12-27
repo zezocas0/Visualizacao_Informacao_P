@@ -10,16 +10,17 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
-const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+const geometry = new THREE.BoxGeometry( 5,5,5  );
 const material = new THREE.MeshBasicMaterial({
     color: '#006063',
 });
 const cube = new THREE.Mesh( geometry, material );
 scene.add( cube );
+cube.position.x = -5;
 
 
 // Add another cube
-const geometry2 = new THREE.BoxGeometry(1, 1, 1);
+const geometry2 = new THREE.BoxGeometry(5, 5, 5);
 const material2 = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
 const cube2 = new THREE.Mesh(geometry2, material2);
 cube2.position.x = 2; // Move it away from the first cube
@@ -41,7 +42,7 @@ var phi=0,theta=0;
 var old_x,old_y;
 
 let textMesh1;
-
+let textMesh2;
 const loader = new FontLoader();
 
 
@@ -63,6 +64,25 @@ loader.load('./helvetiker_regular.typeface.json', function (font) {
   textMesh1.position.y = 1.5;
   textMesh1.visible = false; 
   scene.add(textMesh1);
+
+  const textGeometry2 = new TextGeometry('Cube 2', {
+    font: font,
+    size: 80,
+    height: 5,
+    curveSegments: 32,
+    bevelEnabled: true,
+    bevelThickness: 10,
+    bevelSize: 8,
+    bevelOffset: 0,
+    bevelSegments: 5,
+  }); 
+  var materialText2 = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+  textMesh2 = new THREE.Mesh(textGeometry2, materialText2);
+  textMesh2.position.x = -2.5; // Adjust position as needed
+  textMesh2.position.y = 1.5;
+  textMesh2.visible = false; 
+  scene.add(textMesh2);
+
 });
 
 
@@ -79,7 +99,7 @@ function onMouseDown(event) {
   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
   raycaster.setFromCamera(mouse, camera);
-  const intersects = raycaster.intersectObjects([cube]);
+  const intersects = raycaster.intersectObjects([cube,cube2]);
 
   if (intersects.length > 0 && intersects[0].object === cube) {
       console.log("click111111");
@@ -88,6 +108,12 @@ function onMouseDown(event) {
         console.log(textMesh1.visible);
         console.log("click222222");  
       }
+
+  } else if (intersects.length > 0 && intersects[0].object === cube2) {
+    if (textMesh2) {
+      textMesh2.visible = !textMesh2.visible;
+    }
+
   }
 }
 
